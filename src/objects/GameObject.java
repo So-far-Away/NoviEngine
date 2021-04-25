@@ -1,23 +1,23 @@
 package objects;
 
+import graphics.Material;
 import graphics.Mesh;
 import maths.Vector3f;
 
 public class GameObject {
-	private Vector3f position, rotation, scale;
-	private Mesh mesh;
-	private double temp;
-	
-	public GameObject(Vector3f position, Vector3f rotation, Vector3f scale, Mesh mesh) {
+
+	private final Vector3f position;
+	private final Vector3f rotation;
+	private final Vector3f scale;
+	private final Mesh mesh;
+	private final Material material;
+
+	public GameObject(Vector3f position, Vector3f rotation, Vector3f scale, Mesh mesh, Material material) {
 		this.position = position;
 		this.rotation = rotation;
 		this.scale = scale;
 		this.mesh = mesh;
-	}
-	
-	public void update() {
-		temp += 0.001;
-		position.setX((float) Math.sin(temp));
+		this.material = material;
 	}
 
 	public Vector3f getPosition() {
@@ -34,5 +34,9 @@ public class GameObject {
 
 	public Mesh getMesh() {
 		return mesh;
+	}
+
+	public Material getMaterial() {
+		return material;
 	}
 }

@@ -53,7 +53,7 @@ public class Input {
 		return buttons[button];
 	}
 	
-	public void destroy() {
+	public void clean() {
 		keyboard.free();
 		mouseMove.free();
 		mouseButtons.free();

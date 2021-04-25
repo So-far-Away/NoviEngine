@@ -4,24 +4,26 @@ import maths.Vector2f;
 import maths.Vector3f;
 
 public class Vertex {
-	private Vector3f position, color;
-	private Vector2f textureCoord;
+
+	private final Vector3f position;
+	private final Vector3f normal;
+	private final Vector2f uv;
 	
-	public Vertex(Vector3f position, Vector3f color, Vector2f textureCoord) {
+	public Vertex(Vector3f position, Vector3f normal, Vector2f uv) {
 		this.position = position;
-		this.color = color;
-		this.textureCoord = textureCoord;
+		this.normal = normal;
+		this.uv = uv;
 	}
 
 	public Vector3f getPosition() {
 		return position;
 	}
 	
-	public Vector3f getColor() {
-		return color;
+	public Vector3f getNormal() {
+		return normal;
 	}
 
-	public Vector2f getTextureCoord() {
-		return textureCoord;
+	public Vector2f getUV() {
+		return uv;
 	}
 }

@@ -6,25 +6,29 @@ import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import maths.Matrix4f;
 import maths.Vector3f;
 
 public class Window {
 	private int width, height;
-	private String title;
+	private final String title;
 	private long window;
 	private int frames;
 	private static long time;
 	private Input input;
-	private Vector3f background = new Vector3f(0, 0, 0);
+	private final Vector3f background = new Vector3f(0, 0, 0);
 	private GLFWWindowSizeCallback sizeCallback;
 	private boolean isResized;
 	private boolean isFullscreen;
-	private int[] windowPosX = new int[1], windowPosY = new int[1];
+	private final int[] windowPosX = new int[1];
+	private final int[] windowPosY = new int[1];
+	private final Matrix4f projection;
 	
 	public Window(int width, int height, String title) {
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		projection = Matrix4f.projection(70.0f, (float) width / (float) height, 0.1f, 1000.0f);
 	}
 	
 	public void create() {
@@ -50,12 +54,14 @@ public class Window {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		
 		createCallbacks();
-				
-		GLFW.glfwSwapInterval(1);
 		
 		GLFW.glfwShowWindow(window);
 		
+		GLFW.glfwSwapInterval(1);
+		
 		time = System.currentTimeMillis();
+
+		GL11.glClearColor(background.getX(), background.getY(), background.getZ(), 1.0f);
 	}
 	
 	private void createCallbacks() {
@@ -79,7 +85,6 @@ public class Window {
 			GL11.glViewport(0, 0, width, height);
 			isResized = false;
 		}
-		GL11.glClearColor(background.getX(), background.getY(), background.getZ(), 1.0f);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GLFW.glfwPollEvents();
 		frames++;
@@ -98,8 +103,8 @@ public class Window {
 		return GLFW.glfwWindowShouldClose(window);
 	}
 	
-	public void destroy() {
-		input.destroy();
+	public void clean() {
+		input.clean();
 		sizeCallback.free();
 		GLFW.glfwWindowShouldClose(window);
 		GLFW.glfwDestroyWindow(window);
@@ -124,6 +129,10 @@ public class Window {
 			GLFW.glfwSetWindowMonitor(window, 0, windowPosX[0], windowPosY[0], width, height, 0);
 		}
 	}
+	
+	public void mouseState(boolean lock) {
+		GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, lock ? GLFW.GLFW_CURSOR_DISABLED : GLFW.GLFW_CURSOR_NORMAL);
+	}
 
 	public int getWidth() {
 		return width;
@@ -139,5 +148,9 @@ public class Window {
 
 	public long getWindow() {
 		return window;
+	}
+
+	public Matrix4f getProjectionMatrix() {
+		return projection;
 	}
 }
