@@ -95,8 +95,7 @@ public class Loader {
             textures.add(id);
             return new Texture(id, width, height);
         } catch (IOException e) {
-            System.err.println("[IOException: " + path);
-            System.exit(0);
+            System.err.println("[IOException]: " + path);
             return null;
         }
     }
@@ -167,7 +166,7 @@ public class Loader {
         for (int id : textures)
             GL13.glDeleteTextures(id);
 
-        for (int i = 0; i < programIDs.size(); ++i){
+        for (int i = 0; i < programIDs.size(); ++i) {
             GL20.glDetachShader(programIDs.get(i), vertexIDs.get(i));
             GL20.glDetachShader(programIDs.get(i), fragmentIDs.get(i));
             GL20.glDeleteShader(vertexIDs.get(i));

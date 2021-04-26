@@ -25,4 +25,5 @@ public class Material {
 	public void setTransparent(boolean transparent) {
 		this.transparent = transparent;
 	}
+
 }

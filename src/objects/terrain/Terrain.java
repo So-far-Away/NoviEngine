@@ -1,12 +1,13 @@
-package objects;
+package objects.terrain;
 
 import graphics.Material;
 import graphics.Mesh;
 import graphics.Vertex;
 import maths.Vector2f;
 import maths.Vector3f;
+import objects.GameObject;
 
-public class Terrain extends GameObject{
+public class Terrain extends GameObject {
 
     public static Mesh create(){
         int VERTEX_COUNT = 2, SIZE = 100;

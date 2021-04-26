@@ -25,12 +25,10 @@ public class OBJShader extends Shader {
 			bindVertexArray(object.getMesh().getVAO());
 			enableVertexBuffer(0, 1, 2);
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, object.getMesh().getIBO());
-
+			setUniform("isTransparent", object.getMaterial().isTransparent());
 			activeTexture(0);
 			bindTexture(object.getMaterial().getTexture());
-
 			setUniform("model", Matrix4f.transform(object.getPosition(), object.getRotation(), object.getScale()));
-
 			GL11.glDrawElements(GL11.GL_TRIANGLES, object.getMesh().getIndices().length, GL11.GL_UNSIGNED_INT, 0);
 		}
 
@@ -48,7 +46,7 @@ public class OBJShader extends Shader {
 		activeTexture(0);
 		bindTexture(object.getMaterial().getTexture());
 		bind();
-
+		setUniform("isTransparent", object.getMaterial().isTransparent());
 		setUniform("model", Matrix4f.transform(object.getPosition(), object.getRotation(), object.getScale()));
 		setUniform("view", Matrix4f.view(camera.getPosition(), camera.getRotation()));
 		setUniform("projection", window.getProjectionMatrix());

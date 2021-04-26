@@ -1,7 +1,7 @@
 package tests.forest;
 
 import engine.NoviEngine;
-import objects.Terrain;
+import objects.terrain.Terrain;
 import objects.camera.FirstPersonCamera;
 import org.lwjgl.glfw.GLFW;
 
@@ -10,6 +10,7 @@ import maths.Vector3f;
 import objects.camera.Camera;
 import objects.GameObject;
 import shaders.OBJShader;
+import shaders.SkyShader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class Test extends NoviEngine {
 
 	public OBJShader objShader;
+	public SkyShader skyShader;
 
 	public List<GameObject> objects;
 	public Camera camera;
@@ -28,6 +30,7 @@ public class Test extends NoviEngine {
 	@Override
 	public void init() {
 		objShader = new OBJShader(loader.loadShader("/shaders/mainVertex.glsl", "/shaders/mainFragment.glsl"));
+		skyShader = new SkyShader(loader, loader.loadShader("/shaders/sky/vs.glsl", "/shaders/sky/fs.glsl")) ;
 
 		objects = new ArrayList<>();
 		objects.add(new Terrain(new Vector3f(0, 0, 0),
@@ -54,6 +57,7 @@ public class Test extends NoviEngine {
 	@Override
 	public void render() {
 		objShader.render(objects, window, camera);
+		skyShader.render(window,camera);
 	}
 
 	@Override
